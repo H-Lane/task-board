@@ -1,5 +1,5 @@
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 const modal = document.getElementById(`myModal`);
 const addBtn = document.getElementById(`myBtn`);
@@ -7,26 +7,32 @@ const closeModal = document.getElementsByClassName(`close`)[0];
 const toDo = document.getElementById(`todo-cards`);
 const inProgress = document.getElementById(`in-progress-cards`);
 const done = document.getElementById(`done-cards`);
-const submitBtn = document.getElementById(`submit-btn`);
-const deleteBtn = document.getElementById(`delete-btn`);
+const submitBtn = $(`#submit-btn`);
+const deleteBtn = $(`#delete-btn`);
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
   const taskId = `id` + new Date().getTime();
+  return taskId;
 }
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-  const card = $(`<div class="card"></div>`);
+  const taskId = generateTaskId()
+  const card = $(`<div class="card to-do"></div>`);
   const title = $(`<h2 class="card-header"></h2>`);
   const infoContainer = $(`<div class="card-body"></div>`);
   const description = $(`<p class="card-title"></p>`);
   const dueby = $(`<p class="card-text"></p>`);
-  const delBtn = $(`<button class="btn btn-danger" id="delete-btn">Delete</button>`);
+  const delBtn = $(
+    `<button class="btn btn-danger" id="delete-btn">Delete</button>`
+  );
+  card.attr(`id`, taskId)
 
   infoContainer.append(description, dueby, delBtn);
   card.append(title, infoContainer);
   toDo.append(card);
+  return card;
 }
 
 // Todo: create a function to render the task list and make cards draggable
@@ -34,33 +40,40 @@ function renderTaskList() {}
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event) {
-  const taskTitle = $(`#taskTitle`).value
-  const dueDate = $(`#datepicker`).value
-  const taskDescription = $(`#taskDescription`).value
-  event.preventDefault()
+  event.preventDefault();
+  const taskTitle = document.getElementById(`taskTitle`);
+  const dueDate = document.getElementById(`datepicker`);
+  const taskDescription = document.getElementById(`taskDescription`);
 
-  if (taskTitle.length == 0) {
+  // const taskTitle = $("#taskTitle")
+  // const dueDate = $("#datepicker")
+  // const taskDescription = $("#taskDescription")
+
+  if (taskTitle.value.length == 0) {
     errorMessage();
     return;
-  } else if (dueDate.length == 0) {
+  } else if (dueDate.value.length == 0) {
     errorMessage();
     return;
-  } else if (taskDescription.length == 0) {
+  } else if (taskDescription.value.length == 0) {
     errorMessage();
     return;
   }
 
   const taskContent = {
-    title: taskTitle,
-    date: dueDate,
-    description: taskDescription,
+    title: taskTitle.value,
+    date: dueDate.value,
+    description: taskDescription.value,
   };
 
-  let taskArray = [];
+  taskList.push(taskContent);
 
-  taskArray.push(taskContent);
+  localStorage.setItem(`tasks`, JSON.stringify(taskList));
 
-  localStorage.setItem(`taskArray`, JSON.stringify(taskArray))
+  // const taskCard = createTaskCard();
+  // taskCard.title.textContent = taskTitle.value;
+  // taskCard.description.textContent = taskDescription.value;
+  // taskCard.dueby.textContent = dueDate.value;
 
 }
 
@@ -84,5 +97,4 @@ $(document).ready(function () {
 
 function errorMessage() {
   alert("Please complete all empty forms before submitting.");
-  
-};
+}
