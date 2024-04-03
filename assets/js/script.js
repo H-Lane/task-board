@@ -28,14 +28,12 @@ function createTaskCard(taskContent) {
   );
   title.text(taskContent.title);
   description.text(taskContent.description);
-  dueby.text(taskContent.date)
+  dueby.text(taskContent.date);
 
   infoContainer.append(description, dueby, delBtn);
   card.append(title, infoContainer);
   toDo.append(card);
 }
-
-
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {}
@@ -46,7 +44,6 @@ function handleAddTask(event) {
   const taskTitle = document.getElementById(`taskTitle`);
   const dueDate = document.getElementById(`datepicker`);
   const taskDescription = document.getElementById(`taskDescription`);
-
 
   if (taskTitle.value.length == 0) {
     errorMessage();
@@ -63,8 +60,8 @@ function handleAddTask(event) {
     title: taskTitle.value,
     date: dueDate.value,
     description: taskDescription.value,
-    id: generateTaskId()
-    status: "to-do"
+    id: generateTaskId(),
+    state: "to-do",
   };
 
   taskList.push(taskContent);
@@ -72,18 +69,17 @@ function handleAddTask(event) {
   localStorage.setItem(`tasks`, JSON.stringify(taskList));
 
   createTaskCard(taskContent);
-  return taskList
+  return taskList;
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(handleAddTask()) {
+function handleDeleteTask(handleAddTask) {
   // event.preventDefault()
   // event.stopPropagation()
   // const deletable = event.target
-  taskList = taskList.filter(
-    function(taskContent) {
+  taskList = taskList.filter(function (taskContent) {
     return taskContent.id !== id;
-    })
+  });
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
