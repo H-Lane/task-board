@@ -4,7 +4,7 @@ let nextId = JSON.parse(localStorage.getItem("nextId"));
 const modal = document.getElementById(`myModal`);
 const addBtn = document.getElementById(`myBtn`);
 const closeModal = document.getElementsByClassName(`close`)[0];
-const toDo = document.getElementById(`todo-cards`);
+const toDo = $(`#todo-cards`);
 const inProgress = document.getElementById(`in-progress-cards`);
 const done = document.getElementById(`done-cards`);
 const submitBtn = $(`#submit-btn`);
@@ -17,9 +17,8 @@ function generateTaskId() {
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(task) {
-  const taskId = generateTaskId()
-  const card = $(`<div class="card to-do"></div>`);
+function createTaskCard(taskContent) {
+  const card = $(`<div class="card``"></div>`);
   const title = $(`<h2 class="card-header"></h2>`);
   const infoContainer = $(`<div class="card-body"></div>`);
   const description = $(`<p class="card-title"></p>`);
@@ -27,13 +26,16 @@ function createTaskCard(task) {
   const delBtn = $(
     `<button class="btn btn-danger" id="delete-btn">Delete</button>`
   );
-  card.attr(`id`, taskId)
+  title.text(taskContent.title);
+  description.text(taskContent.description);
+  dueby.text(taskContent.date)
 
   infoContainer.append(description, dueby, delBtn);
   card.append(title, infoContainer);
   toDo.append(card);
-  return card;
 }
+
+
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {}
@@ -45,9 +47,6 @@ function handleAddTask(event) {
   const dueDate = document.getElementById(`datepicker`);
   const taskDescription = document.getElementById(`taskDescription`);
 
-  // const taskTitle = $("#taskTitle")
-  // const dueDate = $("#datepicker")
-  // const taskDescription = $("#taskDescription")
 
   if (taskTitle.value.length == 0) {
     errorMessage();
@@ -64,21 +63,28 @@ function handleAddTask(event) {
     title: taskTitle.value,
     date: dueDate.value,
     description: taskDescription.value,
+    id: generateTaskId()
+    status: "to-do"
   };
 
   taskList.push(taskContent);
 
   localStorage.setItem(`tasks`, JSON.stringify(taskList));
 
-  // const taskCard = createTaskCard();
-  // taskCard.title.textContent = taskTitle.value;
-  // taskCard.description.textContent = taskDescription.value;
-  // taskCard.dueby.textContent = dueDate.value;
-
+  createTaskCard(taskContent);
+  return taskList
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event) {}
+function handleDeleteTask(handleAddTask()) {
+  // event.preventDefault()
+  // event.stopPropagation()
+  // const deletable = event.target
+  taskList = taskList.filter(
+    function(taskContent) {
+    return taskContent.id !== id;
+    })
+}
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {}
