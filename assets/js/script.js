@@ -1,9 +1,6 @@
 // Retrieve tasks and nextId from localStorage
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
-const modal = document.getElementById(`myModal`);
-const addBtn = document.getElementById(`myBtn`);
-const closeModal = document.getElementsByClassName(`close`)[0];
 const lanes = $(`.lane`);
 const toDo = $(`#todo-cards`);
 const inProgress = $(`#in-progress-cards`);
@@ -35,6 +32,17 @@ function createTaskCard(taskContent) {
   description.text(taskContent.description);
   dueBy.text(taskContent.date);
 
+  const dueDate = dayjs(taskContent.date);
+  const today = dayjs();
+  let difference = today.diff(dueDate, `day`);
+  console.log(difference);
+
+  if (difference === 0) {
+    card.addClass(`due-today`);
+  } else if (difference > 0) {
+    card.addClass(`overdue`);
+  }
+
   infoContainer.append(description, dueBy, delBtn);
   card.append(title, infoContainer);
   toDo.append(card);
@@ -43,7 +51,6 @@ function createTaskCard(taskContent) {
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-  //Make sure to .empty the columns before I render the new elements
   toDo.empty();
   inProgress.empty();
   done.empty();
@@ -58,7 +65,7 @@ function renderTaskList() {
 
   console.log("Current Tasks: ", taskList);
 
-  // for (const item in taskList) {
+  // Issue here is that im trying to append the object from the task list array. How do i make it append the card itself
   for (const item of taskList) {
     if (item.state === `to-do`) {
       createTaskCard(item);
@@ -72,7 +79,6 @@ function renderTaskList() {
   }
 
   $(`.draggable`).draggable({
-    // snap: `.lane`,
     snap: `#in-progress-cards, #done-cards, #todo-cards`,
     snapMode: `inner`,
     stack: `.swim-lanes`,
@@ -82,8 +88,6 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event) {
-  event.preventDefault();
-
   const taskTitle = $(`#taskTitle`);
   const dueDate = $(`#datepicker`);
   const taskDescription = $(`#taskDescription`);
@@ -112,6 +116,7 @@ function handleAddTask(event) {
   localStorage.setItem(`tasks`, JSON.stringify(taskList));
 
   createTaskCard(taskContent);
+  location.reload();
   return taskList;
 }
 
@@ -163,7 +168,6 @@ function handleDrop(event, ui) {
   for (const item of taskList) {
     if (item.id === uniqueId) {
       item.state = taskId;
-      console.log(item);
     }
   }
 
@@ -190,3 +194,18 @@ $(document).ready(function () {
 function errorMessage() {
   alert("Please complete all empty forms before submitting.");
 }
+
+// function handleDueDates() {
+//   const today = dayjs().format(`MM DD, YYYY`)
+
+//   for (const item of taskList) {
+//     if (item.date > today) {
+//       return
+//     } else if (item.date === today) {
+
+//     }else if (item.date < today) {
+
+//     }
+//   }
+// }
+// handleDueDates()
