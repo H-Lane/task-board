@@ -72,9 +72,9 @@ function renderTaskList() {
   }
 
   $(`.draggable`).draggable({
-    snap: `.lane`,
+    // snap: `.lane`,
+    snap: `#in-progress-cards, #done-cards, #todo-cards`,
     snapMode: `inner`,
-    stack: `.card`,
     stack: `.swim-lanes`,
     appendTo: `.lane`,
   });

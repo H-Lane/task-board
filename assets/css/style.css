@@ -62,9 +62,23 @@ body {
 }
 
 .to-do {
-  margin:auto
+  margin: auto;
 }
 
 .in-progress {
-  margin:auto
+  margin: auto;
 }
+
+.done {
+  margin: auto;
+}
+
+.due-today {
+  background-color: yellow;
+}
+
+.overdue {
+  background-color: red;
+}
+
+
