@@ -44,8 +44,14 @@ function createTaskCard(taskContent) {
 
   infoContainer.append(description, dueBy, delBtn);
   card.append(title, infoContainer);
-  toDo.append(card);
-  return card;
+  if (taskContent.state === `to-do`) {
+    toDo.append(card);
+  } else if (taskContent.state === `in-progress`) {
+    inProgress.append(card);
+  } else if (taskContent.state === `done`) {
+    card.addClass(`done`);
+    done.append(card);
+  }
 }
 
 // Todo: create a function to render the task list and make cards draggable
@@ -66,15 +72,7 @@ function renderTaskList() {
 
   // Issue here is that im trying to append the object from the task list array. How do i make it append the card itself
   for (const item of taskList) {
-    if (item.state === `to-do`) {
-      createTaskCard(item);
-    } else if (item.state === `in-progress`) {
-      createTaskCard(item);
-      inProgress.append(item);
-    } else if (item.state === `done`) {
-      createTaskCard(item);
-      done.append(item);
-    }
+    createTaskCard(item);
   }
 
   $(`.draggable`).draggable({
@@ -170,7 +168,9 @@ function handleDrop(event, ui) {
     }
   }
 
-  // renderTaskList()
+  localStorage.setItem(`tasks`, JSON.stringify(taskList));
+
+  renderTaskList();
   //check if the state key of the object is done and if it is change the class of the object to change the color
 }
 
@@ -193,18 +193,3 @@ $(document).ready(function () {
 function errorMessage() {
   alert("Please complete all empty forms before submitting.");
 }
-
-// function handleDueDates() {
-//   const today = dayjs().format(`MM DD, YYYY`)
-
-//   for (const item of taskList) {
-//     if (item.date > today) {
-//       return
-//     } else if (item.date === today) {
-
-//     }else if (item.date < today) {
-
-//     }
-//   }
-// }
-// handleDueDates()
