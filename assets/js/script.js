@@ -42,29 +42,37 @@ function createTaskCard(taskContent) {
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
   //Make sure to .empty the columns before I render the new elements
-  // toDo.empty();
-  // inProgress.empty();
-  // done.empty();
-
-  $(`.draggable`).draggabl e();
+  toDo.empty();
+  inProgress.empty();
+  done.empty();
 
   
-
-  for (const item in taskList) {
-    if (item.state === `to-do`) {
-      createTaskCard(taskContent);
-    } else {
-      if (item.state === `in-progress`) {
-        createTaskCard(taskContent);
-        inProgress.append(card);
-      } else {
-        if (item.state === `done`) {
-          createTaskCard(taskContent);
+  /*
+  switch(item.state) 
+  case 'to-do':
+    // what happens then?
+    break;
+    case 'in-progress'
+    */ 
+   
+   console.log("Current Tasks: ", taskList);
+   
+   // for (const item in taskList) {
+     for (const item of taskList) {
+       console.log("Task: ", item);
+       if (item.state === `to-do`) {
+         createTaskCard(item);
+        } else if (item.state === `in-progress`) {
+          createTaskCard(item);
+          inProgress.append(card);
+        } else if (item.state === `done`) {
+          createTaskCard(item);
           done.append(card);
         }
       }
-    }
-  }
+
+
+  $(`.draggable`).draggable();
 }
 
 // Todo: create a function to handle adding a new task
@@ -97,22 +105,41 @@ function handleAddTask(event) {
   taskList.push(taskContent);
 
   localStorage.setItem(`tasks`, JSON.stringify(taskList));
-
+  
   createTaskCard(taskContent);
   return taskList;
 }
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event) {
+  
+  //console.log("THis: ", $(this))
+  console.log("ID: ", $(this).attr('data-id'))
+  let dataId = $(this).attr('data-id');
+  //console.log("ID: ", typeof $(this).attr('data-id'))
   // const deletable = event.target
+ // console.log("Before Tasks: ", taskList)
+  
   taskList = taskList.filter(function (taskContent) {
-    return taskContent.id !== id;
+   // console.log("Task: ", taskContent);
+   // console.log("Type: ", typeof taskContent.id);
+    return taskContent.id !== dataId;
   });
+  
+  //console.log("After Tasks: ", taskList)
+  // Once we Modifiy our TASK LIST we need to UPDATE the datastore
+  localStorage.setItem(`tasks`, JSON.stringify(taskList));
+  renderTaskList();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
-drop: function handleDrop(event, ui) {
+function handleDrop(event, ui) {
+
+  console.log("UI: ", ui)
+  console.log("UI object: ", ui.draggable[0])
   //create a if then conditional to check the event.target.id to determine which lane it was dropped in and change the state key on the object accordingly
+  const taskId = event.target.id;
+  console.log("Dropping: ", taskId)
   //check if the state key of the object is done and if it is change the class of the object to change the color
 }
 
@@ -129,6 +156,7 @@ $(document).ready(function () {
       "ui-droppable-active": "ui-state-active",
       "ui-droppable-hover": "ui-state-hover",
     },
+    drop: handleDrop
   });
 
   $(function () {
