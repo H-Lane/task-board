@@ -71,6 +71,7 @@ body {
 
 .done {
   margin: auto;
+  background-color: white;
 }
 
 .due-today {

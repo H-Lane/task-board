@@ -35,7 +35,6 @@ function createTaskCard(taskContent) {
   const dueDate = dayjs(taskContent.date);
   const today = dayjs();
   let difference = today.diff(dueDate, `day`);
-  console.log(difference);
 
   if (difference === 0) {
     card.addClass(`due-today`);
@@ -160,7 +159,7 @@ function handleDrop(event, ui) {
     taskClass.add(`in-progress`);
     event.target.id = `in-progress`;
   } else if (taskId === `done`) {
-    taskClass.remove(`done`, `in-progress`, `to-do`);
+    taskClass.remove(`done`, `in-progress`, `to-do`, `overdue`, `due-today`);
     taskClass.add(`done`);
     event.target.id = `done`;
   }
