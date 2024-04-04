@@ -61,10 +61,10 @@ body {
   cursor: pointer;
 }
 
-/* #in-progress-cards {
-  z-index: -1;
+.to-do {
+  margin:auto
 }
 
-#done-cards {
-  z-index: -1;
-} */
+.in-progress {
+  margin:auto
+}

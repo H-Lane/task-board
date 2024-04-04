@@ -18,7 +18,9 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 function createTaskCard(taskContent) {
-  const card = $(`<div class="card draggable task-card"></div>`);
+  const card = $(
+    `<div class="card draggable task-card" data-id="${taskContent.id}"></div>`
+  );
   const title = $(`<h2 class="card-header"></h2>`);
   const infoContainer = $(`<div class="card-body"></div>`);
   const description = $(`<p class="card-title"></p>`);
@@ -62,10 +64,10 @@ function renderTaskList() {
       createTaskCard(item);
     } else if (item.state === `in-progress`) {
       createTaskCard(item);
-      inProgress.append(card);
+      inProgress.append(item);
     } else if (item.state === `done`) {
       createTaskCard(item);
-      done.append(card);
+      done.append(item);
     }
   }
 
@@ -139,22 +141,33 @@ function handleDrop(event, ui) {
   console.log("UI: ", ui);
   console.log("UI object: ", ui.draggable[0]);
 
-const taskId = event.target.id;
+  const taskId = event.target.id;
+  const taskClass = ui.draggable[0].classList;
+  const uniqueId = ui.draggable[0].dataset.id;
 
   console.log("Dropping: ", taskId);
   if (taskId === `to-do`) {
-    ui.draggable[0].classList.remove(`done`, `in-progress`, `to-do`);
-    ui.draggable[0].classList.add(`to-do`);
+    taskClass.remove(`done`, `in-progress`, `to-do`);
+    taskClass.add(`to-do`);
     event.target.id = `to-do`;
   } else if (taskId === `in-progress`) {
-    ui.draggable[0].classList.remove(`done`, `in-progress`, `to-do`);
-    ui.draggable[0].classList.add(`in-progress`);
+    taskClass.remove(`done`, `in-progress`, `to-do`);
+    taskClass.add(`in-progress`);
     event.target.id = `in-progress`;
   } else if (taskId === `done`) {
-    ui.draggable[0].classList.remove(`done`, `in-progress`, `to-do`);
-    ui.draggable[0].classList.add(`done`);
+    taskClass.remove(`done`, `in-progress`, `to-do`);
+    taskClass.add(`done`);
     event.target.id = `done`;
   }
+
+  for (const item of taskList) {
+    if (item.id === uniqueId) {
+      item.state = taskId;
+      console.log(item);
+    }
+  }
+
+  // renderTaskList()
   //check if the state key of the object is done and if it is change the class of the object to change the color
 }
 
@@ -163,14 +176,9 @@ $(document).ready(function () {
   renderTaskList();
 
   submitBtn.click(handleAddTask);
-  // lanes.drop(handleDrop)
 
   $(".lane").droppable({
     accept: ".draggable",
-    // classes: {
-    //   "ui-droppable-active": "ui-state-active",
-    //   "ui-droppable-hover": "ui-state-hover",
-    // },
     drop: handleDrop,
   });
 
