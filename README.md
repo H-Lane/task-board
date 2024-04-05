@@ -1,2 +1,42 @@
-# task-board
-Week 5 Challenge
+# Employee Payroll-Tracker
+
+Week 5 Challenge - Create an employee payroll tracker using JavaScript.
+
+## Description
+
+The purpose of this project was to create a kanban style task board with drag and drop, deleteable, and day-based coloration functionality. I created this project to apply all of my current coding knowledge in a realistic setting, especially using javascript to store object to local storage and use them to populate dynamically created elements on my page. Through this project I have learned many different third party API syntaxes and their functionality. I have also gained considerable comfortability with passing parameters to various functions within my code.
+
+## Table of Contents
+
+- [Original Code](#original-code)
+- [Code Source](#code-source-within-this-repo)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
+
+## Original Code
+
+The original, unedited code for this project can be found [HERE](https://git.bootcampcontent.com/University-of-Richmond/UR-VIRT-FSF-PT-02-2024-U-LOLC/-/tree/main/05-Third-Party-APIs/02-Challenge?ref_type=heads)
+
+## Code Source Within This Repo
+
+The HTML code within this repo can be found at [./index.html](index.html)
+
+The JavaScript can be found at [./assets/js/script.js](./assets/js/script.js)
+
+## Usage
+
+The live deployment of this project can be found at [https://h-lane.github.io/payroll-tracker/](https://h-lane.github.io/payroll-tracker/)
+
+![alt text](./assets/Tracker.PNG)
+
+## Credits
+
+- University of Richmond Coding Bootcamp
+- README Template provided by [The Coding Bootcamp Github](https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide)
+- HTML Assistance provided by [The Coding Bootcamp Github](https://coding-boot-camp.github.io/full-stack/html/html-cheatsheet)
+- Markdown Syntax assistance provided by [Github Docs](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#section-links)
+
+## License
+
+This project has no license and is openly available.

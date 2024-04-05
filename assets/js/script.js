@@ -2,9 +2,9 @@
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 const lanes = $(`.lane`);
-const toDo = $(`#todo-cards`);
-const inProgress = $(`#in-progress-cards`);
-const done = $(`#done-cards`);
+const toDoEl = $(`#todo-cards`);
+const inProgressEl = $(`#in-progress-cards`);
+const doneEl = $(`#done-cards`);
 const submitBtn = $(`#submit-btn`);
 
 // Todo: create a function to generate a unique task id
@@ -44,21 +44,22 @@ function createTaskCard(taskContent) {
 
   infoContainer.append(description, dueBy, delBtn);
   card.append(title, infoContainer);
+
   if (taskContent.state === `to-do`) {
-    toDo.append(card);
+    toDoEl.append(card);
   } else if (taskContent.state === `in-progress`) {
-    inProgress.append(card);
+    inProgressEl.append(card);
   } else if (taskContent.state === `done`) {
-    card.addClass(`done`);
-    done.append(card);
+    doneEl.append(card);
+    card.css(`background-color`, `white`);
   }
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-  toDo.empty();
-  inProgress.empty();
-  done.empty();
+  toDoEl.empty();
+  inProgressEl.empty();
+  doneEl.empty();
 
   /*
   switch(item.state) 
@@ -120,7 +121,7 @@ function handleAddTask(event) {
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event) {
   //console.log("THis: ", $(this))
-  console.log("ID: ", $(this).attr("data-id"));
+  // console.log("ID: ", $(this).attr("data-id"));
   let dataId = $(this).attr("data-id");
   //console.log("ID: ", typeof $(this).attr('data-id'))
   // const deletable = event.target
@@ -161,6 +162,7 @@ function handleDrop(event, ui) {
     taskClass.add(`done`);
     event.target.id = `done`;
   }
+  console.log(taskId);
 
   for (const item of taskList) {
     if (item.id === uniqueId) {
@@ -171,7 +173,6 @@ function handleDrop(event, ui) {
   localStorage.setItem(`tasks`, JSON.stringify(taskList));
 
   renderTaskList();
-  //check if the state key of the object is done and if it is change the class of the object to change the color
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
