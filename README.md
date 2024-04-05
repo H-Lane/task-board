@@ -26,16 +26,18 @@ The JavaScript can be found at [./assets/js/script.js](./assets/js/script.js)
 
 ## Usage
 
-The live deployment of this project can be found at [https://h-lane.github.io/payroll-tracker/](https://h-lane.github.io/payroll-tracker/)
+The live deployment of this project can be found at [https://h-lane.github.io/task-board/](https://h-lane.github.io/task-board/)
 
-![alt text](./assets/Tracker.PNG)
+![alt text](./assets/TaskBoard.PNG)
 
 ## Credits
 
 - University of Richmond Coding Bootcamp
 - README Template provided by [The Coding Bootcamp Github](https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide)
-- HTML Assistance provided by [The Coding Bootcamp Github](https://coding-boot-camp.github.io/full-stack/html/html-cheatsheet)
-- Markdown Syntax assistance provided by [Github Docs](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#section-links)
+- Bootstrap Elements used with premission from [getbootstrap.com](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+- JQuery shorthand syntax used with permission from [jquery.com](https://releases.jquery.com/)
+- JQuery UI elements used with permission from [jqueryui.com](https://jqueryui.com/)
+- dayjs elements provided by [day.js.org](https://day.js.org/)
 
 ## License
 
